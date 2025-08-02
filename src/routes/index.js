@@ -8,9 +8,9 @@ import tuyendungRouter from './tuyenDung.routes.js';
 
 const router = express.Router();
 
-router.use('/dichvu', dichvuRouter);
-router.use('/lienhe', lienheRouter); 
-router.use('/tintuc', tintucRouter); 
-router.use('/tuyendung', tuyendungRouter); 
+router.use('/api/dichvu', dichvuRouter);
+router.use('/api/lienhe', lienheRouter);
+router.use('/api/tintuc', tintucRouter);
+router.use('/api/tuyendung', tuyendungRouter);
 
 export default router;
