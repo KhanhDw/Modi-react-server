@@ -6,7 +6,7 @@ const pool = mysql.createPool({
     user: 'root',
     password: 'root',
     database: 'modi',
-    port: 3333,
+    port: 3307 || 3333,
     waitForConnections: true,
     connectionLimit: 10,
     queueLimit: 0

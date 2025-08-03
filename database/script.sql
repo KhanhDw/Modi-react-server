@@ -26,8 +26,9 @@ CREATE TABLE dich_vu (
 CREATE TABLE tin_tuc (
     id INT AUTO_INCREMENT PRIMARY KEY,
     tieu_de VARCHAR(255) NOT NULL,
+    hinh_anh VARCHAR(255) not null,
     noi_dung TEXT NOT NULL,
-    tac_gia VARCHAR(100),
+    tac_gia VARCHAR(100) not null,
     ngay_dang TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -89,7 +90,7 @@ INSERT INTO `tin_tuc` (`tieu_de`, `noi_dung`, `tac_gia`) VALUES
 ('AI và tương lai của ngành công nghệ', 'Thảo luận về vai trò của trí tuệ nhân tạo (AI) và những dự đoán về sự phát triển của ngành công nghệ trong tương lai.', 'Hoàng Minh E');
 
 -- 3. Dữ liệu mẫu cho bảng `tuyen_dung`
-INSERT INTO `tuyen_dung` (`vi_tri`, `mo_ta_cong_viec`, `yeu_cau_ung_vien`, `so_luong`, `han_nop_ho_so`, `dia_diem`, `muc_luong`) VALUES
+INSERT INTO `tuyen_dung` (`vi_tri`, `mo_tadich_vu_cong_viec`, `yeu_cau_ung_vien`, `so_luong`, `han_nop_ho_so`, `dia_diem`, `muc_luong`) VALUES
 ('Lập trình viên Backend (Java/Node.js)', 'Phát triển và bảo trì các API và dịch vụ backend cho ứng dụng web và di động.', 'Có kinh nghiệm 2+ năm với Java/Node.js, hiểu biết về cơ sở dữ liệu SQL/NoSQL.', 2, '2025-08-31', 'Hà Nội', '15-25 triệu VND'),
 ('Chuyên viên Marketing số', 'Lên kế hoạch và triển khai các chiến dịch marketing trên các kênh số (SEO, SEM, Social Media).', 'Có kinh nghiệm 1+ năm trong marketing số, kỹ năng phân tích và sáng tạo tốt.', 1, '2025-08-15', 'TP. Hồ Chí Minh', '10-18 triệu VND'),
 ('Thiết kế UI/UX', 'Thiết kế giao diện người dùng và trải nghiệm người dùng cho các sản phẩm số.', 'Có kinh nghiệm 2+ năm thiết kế UI/UX, thành thạo Figma/Sketch/Adobe XD.', 1, '2025-09-10', 'Đà Nẵng', '12-20 triệu VND'),
