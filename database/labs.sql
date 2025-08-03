@@ -17,3 +17,4 @@ ALTER TABLE tuyen_dung ADD COLUMN dia_diem VARCHAR(255);
 
 ALTER TABLE tuyen_dung ADD COLUMN muc_luong VARCHAR(100);
 
+ALTER TABLE tin_tuc ADD COLUMN hinh_anh VARCHAR(255) not null;
