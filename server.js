@@ -2,9 +2,10 @@ import express from 'express';
 import session from 'express-session';
 import routes from './src/routes/index.js';
 import pool from './src/config/database.js';
-import requireAdminAuth from './src/middlewares/adminAuth.js';
 import cors from 'cors'; // Import cors
 import dotenv from 'dotenv';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
 dotenv.config();
 
@@ -20,6 +21,13 @@ app.use(cors({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Tạo lại __dirname trong ES module
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+
+app.use(express.static(path.join(__dirname, 'public')));
+
 // Session middleware
 app.use(
     session({
@@ -27,6 +35,8 @@ app.use(
         resave: false,
         saveUninitialized: true,
         cookie: {
+            secure: false, // true nếu dùng HTTPS
+            httpOnly: true,
             maxAge: 1000 * 60 * 60, // 1 giờ
         },
     })

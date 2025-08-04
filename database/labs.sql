@@ -1,7 +1,9 @@
+use Modi;
+
 select * from dich_vu;
 select * from lien_he;
 select * from tuyen_dung;
-
+select * from tin_tuc;
 
 SELECT * FROM tin_tuc ORDER BY ngay_dang DESC;
 

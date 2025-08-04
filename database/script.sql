@@ -83,11 +83,11 @@ INSERT INTO `dich_vu` (`ten_dich_vu`, `mo_ta`) VALUES
 
 -- 2. Dữ liệu mẫu cho bảng `tin_tuc`
 INSERT INTO `tin_tuc` (`tieu_de`, `noi_dung`, `tac_gia`) VALUES
-('Xu hướng chuyển đổi số 2024', 'Bài viết phân tích các xu hướng công nghệ nổi bật và tác động của chúng đến doanh nghiệp trong năm 2024.', 'Nguyễn Văn A'),
-('Lợi ích của ứng dụng di động trong kinh doanh', 'Khám phá những lợi ích vượt trội mà ứng dụng di động mang lại cho các mô hình kinh doanh hiện đại.', 'Trần Thị B'),
-('Bảo mật dữ liệu trên Cloud: Những điều cần biết', 'Hướng dẫn chi tiết về các biện pháp bảo mật dữ liệu hiệu quả khi sử dụng dịch vụ điện toán đám mây.', 'Lê Văn C'),
-('Cách tối ưu SEO cho website doanh nghiệp', 'Chia sẻ các thủ thuật và chiến lược tối ưu hóa công cụ tìm kiếm (SEO) giúp website của bạn đạt thứ hạng cao hơn.', 'Phạm Thị D'),
-('AI và tương lai của ngành công nghệ', 'Thảo luận về vai trò của trí tuệ nhân tạo (AI) và những dự đoán về sự phát triển của ngành công nghệ trong tương lai.', 'Hoàng Minh E');
+('Xu hướng chuyển đổi số 2024', 'Bài viết phân tích các xu hướng công nghệ nổi bật và tác động của chúng đến doanh nghiệp trong năm 2024.', 'Nguyễn Văn A', 'public\images\tintuc\bannerTinTuc.jpg'), 
+('Lợi ích của ứng dụng di động trong kinh doanh', 'Khám phá những lợi ích vượt trội mà ứng dụng di động mang lại cho các mô hình kinh doanh hiện đại.', 'Trần Thị B', 'public\images\tintuc\bannerTinTuc.jpg'), 
+('Bảo mật dữ liệu trên Cloud: Những điều cần biết', 'Hướng dẫn chi tiết về các biện pháp bảo mật dữ liệu hiệu quả khi sử dụng dịch vụ điện toán đám mây.', 'Lê Văn C', 'public\images\tintuc\bannerTinTuc.jpg'), 
+('Cách tối ưu SEO cho website doanh nghiệp', 'Chia sẻ các thủ thuật và chiến lược tối ưu hóa công cụ tìm kiếm (SEO) giúp website của bạn đạt thứ hạng cao hơn.', 'Phạm Thị D', 'public\images\tintuc\bannerTinTuc.jpg'), 
+('AI và tương lai của ngành công nghệ', 'Thảo luận về vai trò của trí tuệ nhân tạo (AI) và những dự đoán về sự phát triển của ngành công nghệ trong tương lai.', 'Hoàng Minh E', 'public\images\tintuc\bannerTinTuc.jpg');
 
 -- 3. Dữ liệu mẫu cho bảng `tuyen_dung`
 INSERT INTO `tuyen_dung` (`vi_tri`, `mo_tadich_vu_cong_viec`, `yeu_cau_ung_vien`, `so_luong`, `han_nop_ho_so`, `dia_diem`, `muc_luong`) VALUES
