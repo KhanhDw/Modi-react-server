@@ -26,7 +26,7 @@ CREATE TABLE dich_vu (
 CREATE TABLE tin_tuc (
     id INT AUTO_INCREMENT PRIMARY KEY,
     tieu_de VARCHAR(255) NOT NULL,
-    hinh_anh VARCHAR(255) not null,
+    hinh_anh VARCHAR(255),
     noi_dung TEXT NOT NULL,
     tac_gia VARCHAR(100) not null,
     ngay_dang TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -41,8 +41,8 @@ CREATE TABLE tuyen_dung (
     mo_ta_cong_viec TEXT NOT NULL,
     yeu_cau_ung_vien TEXT,
     so_luong INT,
-    thoi_gian_lam_viec ENUM('Full-time', 'Part-time') default 'Full-time' NOT NULL,
-    kinh_nghiem int not null,
+    thoi_gian_lam_viec ENUM('Full-time', 'Part-time') default 'Full-time' NOT NULL, -- thêm ở đây
+    kinh_nghiem int not null,  -- thêm ở đây
     han_nop_ho_so DATE,
     dia_diem VARCHAR(255), -- Thêm cột địa điểm
     muc_luong VARCHAR(100), -- Thêm cột mức lương (dùng VARCHAR để linh hoạt với các giá trị như "Thỏa thuận", "Cạnh tranh", hoặc khoảng lương)

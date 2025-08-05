@@ -2,15 +2,18 @@ import express from 'express';
 import session from 'express-session';
 import routes from './src/routes/index.js';
 import pool from './src/config/database.js';
-import cors from 'cors'; // Import cors
+import cors from 'cors';
 import dotenv from 'dotenv';
 import path from 'path';
+import fs from 'fs';
+import multer from 'multer';
+
 import { fileURLToPath } from 'url';
 
 dotenv.config();
 
 const app = express();
-const port = 3000;
+const PORT = 3000;
 
 // Middleware CORS
 app.use(cors({
@@ -45,6 +48,179 @@ app.use(
 // Route
 app.use('/', routes);
 
+
+
+// upload ảnh
+
+// Tạo thư mục public/image nếu chưa tồn tại
+const uploadDir = 'public/image';
+if (!fs.existsSync(uploadDir)) {
+    fs.mkdirSync(uploadDir, { recursive: true });
+}
+
+// Cấu hình multer để lưu file
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, 'public/image/');
+    },
+    filename: function (req, file, cb) {
+        // Tạo tên file duy nhất: timestamp_originalname
+        const uniqueName = Date.now() + '_' + file.originalname;
+        cb(null, uniqueName);
+    }
+});
+
+// Kiểm tra file upload (chỉ cho phép ảnh)
+const fileFilter = (req, file, cb) => {
+    const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'];
+    if (allowedTypes.includes(file.mimetype)) {
+        cb(null, true);
+    } else {
+        cb(new Error('Chỉ cho phép upload file ảnh (JPEG, PNG, GIF, WebP)'), false);
+    }
+};
+
+// Cấu hình multer
+const upload = multer({
+    storage: storage,
+    limits: {
+        fileSize: 5 * 1024 * 1024 // Giới hạn 5MB
+    },
+    fileFilter: fileFilter
+});
+
+// Route upload single image
+app.post('/api/upload', upload.single('image'), (req, res) => {
+    try {
+        if (!req.file) {
+            return res.status(400).json({
+                success: false,
+                message: 'Không có file nào được upload'
+            });
+        }
+
+        res.json({
+            success: true,
+            message: 'Upload ảnh thành công',
+            data: {
+                filename: req.file.filename,
+                originalname: req.file.originalname,
+                size: req.file.size,
+                path: `/public/image/${req.file.filename}`,
+                url: `http://localhost:${PORT}/image/${req.file.filename}`
+            }
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: 'Lỗi server: ' + error.message
+        });
+    }
+});
+
+// Route upload multiple images
+app.post('/api/upload-multiple', upload.array('images', 10), (req, res) => {
+    try {
+        if (!req.files || req.files.length === 0) {
+            return res.status(400).json({
+                success: false,
+                message: 'Không có file nào được upload'
+            });
+        }
+
+        const fileData = req.files.map(file => ({
+            filename: file.filename,
+            originalname: file.originalname,
+            size: file.size,
+            path: `/public/image/${file.filename}`,
+            url: `http://localhost:${PORT}/image/${file.filename}`
+        }));
+
+        res.json({
+            success: true,
+            message: `Upload ${req.files.length} ảnh thành công`,
+            data: fileData
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: 'Lỗi server: ' + error.message
+        });
+    }
+});
+
+// Route lấy danh sách ảnh đã upload
+app.get('/api/images', (req, res) => {
+    try {
+        const files = fs.readdirSync('public/image');
+        const imageFiles = files.filter(file => {
+            const ext = path.extname(file).toLowerCase();
+            return ['.jpg', '.jpeg', '.png', '.gif', '.webp'].includes(ext);
+        });
+
+        const images = imageFiles.map(file => ({
+            filename: file,
+            url: `http://localhost:${PORT}/image/${file}`,
+            path: `/image/${file}`
+        }));
+
+        res.json({
+            success: true,
+            data: images
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: 'Lỗi khi lấy danh sách ảnh: ' + error.message
+        });
+    }
+});
+
+// Route xóa ảnh
+app.delete('/api/delete/:filename', (req, res) => {
+    try {
+        const filename = req.params.filename;
+        const filePath = path.join('public/image', filename);
+
+        if (fs.existsSync(filePath)) {
+            fs.unlinkSync(filePath);
+            res.json({
+                success: true,
+                message: 'Xóa ảnh thành công'
+            });
+        } else {
+            res.status(404).json({
+                success: false,
+                message: 'Không tìm thấy file'
+            });
+        }
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: 'Lỗi khi xóa ảnh: ' + error.message
+        });
+    }
+});
+
+
+// Error handling middleware
+app.use((error, req, res, next) => {
+    if (error instanceof multer.MulterError) {
+        if (error.code === 'LIMIT_FILE_SIZE') {
+            return res.status(400).json({
+                success: false,
+                message: 'File quá lớn. Kích thước tối đa 5MB'
+            });
+        }
+    }
+
+    res.status(500).json({
+        success: false,
+        message: error.message
+    });
+});
+
+
 async function startServer() {
     let connection;
     try {
@@ -59,8 +235,8 @@ async function startServer() {
         }
     }
 
-    app.listen(port, '0.0.0.0', () => {
-        console.log(`Express server running at http://localhost:${port}/`);
+    app.listen(PORT, '0.0.0.0', () => {
+        console.log(`Express server running at http://localhost:${PORT}/`);
     });
 }
 
