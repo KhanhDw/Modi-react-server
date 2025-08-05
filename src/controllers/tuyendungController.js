@@ -40,7 +40,7 @@ const getTuyenDungById = async (req, res) => {
 const addTuyenDung = async (req, res) => {
     try {
         // Dữ liệu mong đợi từ client: { chuc_vu, mo_ta, dia_diem, muc_luong, han_nop }
-        const newTuyenDung = req.body; 
+        const newTuyenDung = req.body;
         const resultId = await tuyendung.add(newTuyenDung);
         res.status(201).json({ message: 'Đăng tin tuyển dụng thành công!', data: { id: resultId } });
     } catch (error) {
@@ -54,10 +54,10 @@ const addTuyenDung = async (req, res) => {
  */
 const updateTuyenDung = async (req, res) => {
     try {
-        const { id } = req.params; 
+        const { id } = req.params;
         const updatedTuyenDung = req.body; // Dữ liệu cần cập nhật
         const affectedRows = await tuyendung.update(id, updatedTuyenDung);
-        
+
         if (affectedRows > 0) {
             res.json({ message: 'Cập nhật tin tuyển dụng thành công' });
         } else {
