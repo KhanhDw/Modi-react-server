@@ -1,8 +1,9 @@
 -- SQL Script for creating basic tables for a website
 -- Database: MySQL
 -- ------------------------------------------------------
-create database Modi;
-use Modi;
+-- create database Modi;
+-- use Modi;
+use modi;
 
 -- Xóa các bảng nếu chúng đã tồn tại để tránh lỗi khi chạy lại script
 DROP TABLE IF EXISTS `lien_he`;
@@ -73,7 +74,6 @@ CREATE TABLE lien_he (
 -- Database: MySQL
 -- ------------------------------------------------------
 
-USE Modi;
 
 -- Dữ liệu mẫu cho bảng dich_vu (Dịch vụ)
 INSERT INTO dich_vu (ten_dich_vu, mo_ta) VALUES
@@ -126,4 +126,5 @@ INSERT INTO lien_he (ho_ten, email, so_dien_thoai, noi_dung, trang_thai) VALUES
 ('Bùi Minh Quang', 'quang.bui@example.com', '0932109876', 'Có thể cung cấp thêm thông tin về tin tức "Xu hướng công nghệ 2024" không?', 'Chưa phản hồi'),
 ('Đỗ Thị Lan', 'lan.do@example.com', '0921098765', 'Tôi muốn góp ý về chất lượng dịch vụ của công ty.', 'Chưa phản hồi'),
 ('Ngô Văn Hùng', 'hung.ngo@example.com', '0910987654', 'Vui lòng liên hệ để thảo luận về cơ hội hợp tác.', 'Đã phản hồi');
+
 

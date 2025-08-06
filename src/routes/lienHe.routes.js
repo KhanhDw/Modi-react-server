@@ -1,6 +1,6 @@
 import express from 'express';
 // Import controller, nơi chứa tất cả các hàm xử lý logic
-import lienheController from '../controllers/lienHeController.js';
+import lienheController from '../controllers/lienheController.js';
 
 const router = express.Router();
 
