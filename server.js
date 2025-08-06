@@ -176,6 +176,59 @@ app.get('/api/images', (req, res) => {
     }
 });
 
+
+// lây ảnh theo tên
+app.get('/api/images', (req, res) => {
+    try {
+        const { filename } = req.query;
+
+        const files = fs.readdirSync('public/image');
+        const imageFiles = files.filter(file => {
+            const ext = path.extname(file).toLowerCase();
+            return ['.jpg', '.jpeg', '.png', '.gif', '.webp'].includes(ext);
+        });
+
+        // Nếu có truyền ?filename=...
+        if (filename) {
+            const found = imageFiles.find(file => file === filename);
+            if (!found) {
+                return res.status(404).json({
+                    success: false,
+                    message: `Không tìm thấy ảnh với tên: ${filename}`
+                });
+            }
+
+            return res.json({
+                success: true,
+                data: {
+                    filename: found,
+                    url: `http://localhost:${PORT}/image/${found}`,
+                    path: `/image/${found}`
+                }
+            });
+        }
+
+        // Nếu không có filename → trả về toàn bộ danh sách ảnh
+        const images = imageFiles.map(file => ({
+            filename: file,
+            url: `http://localhost:${PORT}/image/${file}`,
+            path: `/image/${file}`
+        }));
+
+        res.json({
+            success: true,
+            data: images
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: 'Lỗi khi lấy danh sách ảnh: ' + error.message
+        });
+    }
+});
+
+
+
 // Route xóa ảnh
 app.delete('/api/delete/:filename', (req, res) => {
     try {
