@@ -15,7 +15,8 @@ const pool = mysql.createPool({
     queueLimit: 0,
     ssl: {
         // Dùng cho chạy local, nếu triển khai trên Render thì bỏ hoặc đặt ssl: true
-        ca: process.env.NODE_ENV === 'production' ? undefined : fs.readFileSync('D:\\CongViec\\Modi\\ca.pem')
+        ca: process.env.NODE_ENV === 'production' ? process.env.MYSQL_SSL_CA : fs.readFileSync('./Cert/ca.pem'),
+        rejectUnauthorized: false
     }
 });
 
