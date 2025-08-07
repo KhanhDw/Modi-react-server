@@ -1,5 +1,6 @@
 import express from 'express';
 import session from 'express-session';
+import MySQLStoreFactory from 'express-mysql-session';
 import routes from './src/routes/index.js';
 import pool from './src/config/database.js';
 import cors from 'cors';
@@ -13,6 +14,12 @@ dotenv.config();
 
 const app = express();
 const PORT = 3000;
+
+// Tạo MySQLStore bằng kết nối
+const MySQLStore = MySQLStoreFactory(session);
+
+const sessionStore = new MySQLStore({}, pool);
+
 
 // Middleware CORS
 app.use(cors({
@@ -36,6 +43,7 @@ app.use(
         secret: process.env.SESSION_SECRET || 'modi-secret-key',
         resave: false,
         saveUninitialized: true,
+        store: sessionStore,
         cookie: {
             secure: false, // true nếu dùng HTTPS
             httpOnly: true,
