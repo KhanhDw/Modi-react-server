@@ -7,7 +7,6 @@ import dotenv from 'dotenv';
 import path from 'path';
 import fs from 'fs';
 import multer from 'multer';
-
 import { fileURLToPath } from 'url';
 
 dotenv.config();
@@ -17,7 +16,7 @@ const PORT = 3000;
 
 // Middleware CORS
 app.use(cors({
-    origin: 'http://localhost:5173', // Cho phép frontend (Vite) truy cập
+    origin: process.env.URL_FE || 'http://localhost:5173', // Cho phép frontend (Vite) truy cập
     credentials: true, // Cho phép gửi cookie nếu cần
 }));
 
