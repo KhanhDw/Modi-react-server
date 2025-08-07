@@ -1,13 +1,15 @@
 import mysql from 'mysql2/promise';
 import fs from 'fs'; // Dùng để đọc file ca.pem nếu chạy local
+import dotenv from 'dotenv';
+dotenv.config();
 
 // Tạo pool kết nối với Aiven MySQL
 const pool = mysql.createPool({
-    host: process.env.DB_HOST || '127.0.0.1',
-    port: process.env.DB_PORT || 3307,
-    user: process.env.DB_USER || 'root',
-    password: process.env.DB_PASSWORD || 'root',
-    database: process.env.DB_NAME || 'modi',
+    host: process.env.DB_HOST || process.env.LOCAL_DB_HOST,
+    port: process.env.DB_PORT || process.env.LOCAL_DB_PORT,
+    user: process.env.DB_USER || process.env.LOCAL_DB_USER,
+    password: process.env.DB_PASSWORD || process.env.LOCAL_DB_PASSWORD,
+    database: process.env.DB_NAME || process.env.LOCAL_DB_NAME,
     waitForConnections: true,
     connectionLimit: 10,
     queueLimit: 0,
