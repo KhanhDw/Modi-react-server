@@ -23,7 +23,12 @@ const sessionStore = new MySQLStore({}, pool);
 
 // Middleware CORS
 app.use(cors({
-    origin: process.env.URL_FE || 'http://localhost:5173', // Cho phép frontend (Vite) truy cập
+    origin: [
+        process.env.URL_FE,
+        'http://localhost:5173',
+    ],
+
+
     credentials: true, // Cho phép gửi cookie nếu cần
 }));
 
