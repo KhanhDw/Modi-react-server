@@ -25,6 +25,7 @@ const sessionStore = new MySQLStore({}, pool);
 app.use(cors({
     origin: [
         process.env.URL_FE,
+        'http://thietkewebbanhang.xyz',
         'http://localhost:5173',
     ],
 
